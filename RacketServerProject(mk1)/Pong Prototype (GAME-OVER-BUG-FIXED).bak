@@ -12,17 +12,13 @@
 (define ONE 1)
 (define TWO 2)
 (define THREE 3)
-(define FOUR 4)
-(define FIVE 5)
-(define SIX 6)
-
 
 ;; Physical constants
 
 (define-values (WIDTH HEIGHT) (values 1000 650))
 (define-values (CANVAS-WIDTH CANVAS-HEIGHT) (values 1000 650))
 
-(define BALL-IMAGE (bitmap "BALL.png"))
+(define BALL-IMAGE (bitmap "PixelArt (1).png"))
 (define BALL (scale 0.1 BALL-IMAGE))
 (define-values (BALL-WIDTH BALL-HEIGHT) (values 55 55))
 
@@ -35,7 +31,7 @@
 
 (define-values (BOUNDARY LEFT RIGHT) (values 10 5 (- CANVAS-WIDTH 5)))
 
-(define GAME-OVER (bitmap "GAMEOVER.png"))
+(define GAME-OVER (bitmap "PixelArt (2).png"))
 
 ;; A state is a list formed by the following members:
 
@@ -48,7 +44,7 @@
 
 ;; Updating the list at a tracker with a new value
 ;; Given a list, a tracker and a value, returns the updated list formed by the new values.
-;; Replacing the first occurence of the variable tracker by the given variable value.
+;; Replacing the firs occurence of the variable tracker by the given variable value.
 
 (define (replace lst tracker value)
   (append (take lst tracker)
@@ -79,8 +75,6 @@
 
 
 
-
-
 ;;******************************************************************************************************************
 ;;****THIS FUNCTION DOWN BELOW IS THE FUNCTION I IMPLEMENTED FOR THE GAME-OVER BUG FIX****
 
@@ -95,20 +89,10 @@
         [( >= (left-bar-y state) (ball-y state)) ( - (left-bar-y state) (ball-y state))]
         [else ( - (ball-y state) (left-bar-y state))]) (+ (/ (image-height BAR) 2) ERROR-MARGIN))) #t]
     [(and
-      (<= (ball-x state) (- (+ (image-width BAR) (/ (image-width BALL) 2)) (* 0.5 (image-width BAR)))) 
-       (<= (cond
-        [( >= (left-bar-y state) (ball-y state)) ( - (left-bar-y state) (ball-y state))]
-        [else ( - (ball-y state) (left-bar-y state))]) (+ (/ (image-height BAR) 2) (/ ERROR-MARGIN 2)))) #t]
-    [(and
       (<= (ball-x state) (- (+ (image-width BAR) (/ (image-width BALL) 2)) (* 0.5 (image-width BAR))))
       (equal? (cond
         [( >= (left-bar-y state) (ball-y state)) ( - (left-bar-y state) (ball-y state))]
         [else ( - (ball-y state) (left-bar-y state))]) (/ (image-height BAR) 2))) #t]
-    [(and
-      (<= (ball-x state) (- (+ (image-width BAR) (/ (image-width BALL) 2)) (* 0.5 (image-width BAR)))) 
-       (<= (cond
-        [( >= (left-bar-y state) (ball-y state)) ( - (left-bar-y state) (ball-y state))]
-        [else ( - (ball-y state) (left-bar-y state))]) (- (/ (image-height BAR) 2) (/ ERROR-MARGIN 2)))) #t]
     [(and
       (<= (ball-x state) (- (+ (image-width BAR) (/ (image-width BALL) 2)) (* 0.5 (image-width BAR)))) 
        (<= (cond
@@ -176,7 +160,7 @@
           (replace state TWO (* (sub1 ZERO) (ball-x-vec state)))]
          [(or (equal? (ball-y state) BOUNDARY)
               (equal? (ball-y state) (- HEIGHT BOUNDARY)))
-          (replace state THREE (* (sub1 ZERO) (ball-y-vec state)))]
+          (replace state 3 (* (sub1 ZERO) (ball-y-vec state)))]
          [else state]))))
 
 ;; Tests:
@@ -194,7 +178,7 @@
     (max 40  (min (- HEIGHT 25) (+ vec (left-bar-y state)))))
   (if PAUSED?
       state
-      (replace state FOUR new-y)))
+      (replace state 4 new-y)))
 
 ;; Tests:
 #|
@@ -215,7 +199,7 @@
 ;; Best part of the code: by replacing the state, it matches the ball's height. (y coordinate)
 
 (define (arti-intel state)
-  (replace state FIVE (ball-y state)))
+  (replace state 5 (ball-y state)))
 
 ;; Tests:
 #|
